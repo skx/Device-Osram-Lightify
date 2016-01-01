@@ -1,3 +1,4 @@
+
 =head1 NAME
 
 Device::Osram::Lightify::API - API Documentation
@@ -179,7 +180,6 @@ with the appropriate values.
 Once sent read back 20 bytes to get your result.
 
 =cut
-
 
 
 
