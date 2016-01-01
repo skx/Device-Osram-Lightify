@@ -361,9 +361,9 @@ sub set_brightness
 }
 
 
-=head2 rgb
+=head2 set_rgbw
 
-Set the specified RGB values of this light.
+Set the specified RGBW values of this light.
 
 =cut
 
