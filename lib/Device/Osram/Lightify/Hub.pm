@@ -256,6 +256,46 @@ sub _read
 }
 
 
+=begin doc _connect
+
+Private and internal-method.
+
+Generate and return a four-byte token.  All the mutator commands
+for the light-devices take such a thing.  It doesn't seem to matter
+what I set, so I've encoded the seconds-past-the-epoch.
+
+Setting a value avoids commands being dropped as "old"/"reused".
+
+=end doc
+
+=cut
+
+sub _session_token()
+{
+    my $time = time();
+    $time = sprintf( "%x", time );
+
+    my $t = "";
+
+    if ( $time =~ /^(..)(..)(..)(..)$/ )
+    {
+        $t .= chr( hex($1) );
+        $t .= chr( hex($2) );
+        $t .= chr( hex($3) );
+        $t .= chr( hex($4) );
+    }
+    else
+    {
+
+        $t .= chr( hex("0x00") );
+        $t .= chr( hex("0x00") );
+        $t .= chr( hex("0x00") );
+        $t .= chr( hex("0x00") );
+    }
+    return ($t);
+}
+
+
 1;
 
 

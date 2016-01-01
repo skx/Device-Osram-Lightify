@@ -141,6 +141,7 @@ sub _decode_binary
 }
 
 
+
 =head2 brightness
 
 Get the brightness value of this light (0-100).
@@ -265,10 +266,13 @@ sub set_on
 
     # Prefix for sending a light off
     my $x = "";
-    foreach my $char (qw! 0x0f 0x00 0x00 0x32 0x00 0x00 0x00 0x00 !)
+    foreach my $char (qw! 0x0f 0x00 0x00 0x32 !)
     {
         $x .= chr( hex($char) );
     }
+
+    # Add a time/session-token
+    $x .= $parent->_session_token();
 
     # MAC address - binary - in reverse
     $x .= $self->{ 'maddr' };
@@ -298,13 +302,17 @@ sub set_off
 
     # Prefix for sending a light off
     my $x = "";
-    foreach my $char (qw! 0x0f 0x00 0x00 0x32 0x00 0x00 0x00 0x00 !)
+    foreach my $char (qw! 0x0f 0x00 0x00 0x32 !)
     {
         $x .= chr( hex($char) );
     }
 
+    # Add a time/session-token
+    $x .= $parent->_session_token();
+
     # MAC address - binary - in reverse
     $x .= $self->{ 'maddr' };
+
 
     # Desired state: 0
     $x .= chr( hex("0x00") );
@@ -313,6 +321,7 @@ sub set_off
 
     # Read 8-byte header + 12-byte reply
     my $buffer = $parent->_read(20);
+
 }
 
 
@@ -340,10 +349,13 @@ sub set_brightness
 
     # Prefix for changing the brightness.
     my $x = "";
-    foreach my $char (qw! 11 00 00 31 00 00 00 00 !)
+    foreach my $char (qw! 11 00 00 31 !)
     {
         $x .= chr( hex($char) );
     }
+
+    # Add a time/session-token
+    $x .= $parent->_session_token();
 
     # MAC address - binary - in reverse
     $x .= $self->{ 'maddr' };
@@ -376,10 +388,14 @@ sub set_rgbw
 
     # Prefix for changing the RGBW values.
     my $x = "";
-    foreach my $char (qw! 0x14 0x00 0x00 0x36 0x00 0x00 0x00 0x00 !)
+    foreach my $char (qw! 0x14 0x00 0x00 0x36 !)
     {
         $x .= chr( hex($char) );
     }
+
+
+    # Add a time/session-token
+    $x .= $parent->_session_token();
 
     # MAC address - binary - in reverse
     $x .= $self->{ 'maddr' };
@@ -428,10 +444,13 @@ sub set_temperature
     my $t2 = ( $temp - $t1 ) / 256;
 
     my $x = "";
-    foreach my $char (qw! 0x12 0x00 0x00 0x33 0x03 0x00 0x00 0x00 !)
+    foreach my $char (qw! 0x12 0x00 0x00 0x33 !)
     {
         $x .= chr( hex($char) );
     }
+
+    # Add a time/session-token
+    $x .= $parent->_session_token();
 
     # MAC address - binary - in reverse
     $x .= $self->{ 'maddr' };

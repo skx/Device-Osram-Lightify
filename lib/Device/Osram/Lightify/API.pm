@@ -122,6 +122,12 @@ The rest of the commands are going to be bulb-specific, and involve
 sending a command with the MAC address of the destination device inside
 their bodies.
 
+It seems to be the case that we need to set a session ID with each
+command, to avoid issues with commands being dropped as previously-seen
+or otherwise prevent replay-attacks.
+
+I've denoted such bytes as SS SS SS SS in the following commands.
+
 =cut
 
 =head2 On/Off
@@ -131,7 +137,7 @@ magic string:
 
 =for example begin
 
-    0F 00 00 32 00 00 00 00 NN NN NN NN NN NN NN NN ON
+    0F 00 00 32 SS SS SS SS NN NN NN NN NN NN NN NN ON
 
 =for example end
 
@@ -150,7 +156,7 @@ magic string:
 
 =for example begin
 
-     11 00 00 31 00 00 00 00 NN NN NN NN NN NN NN NN XX 00 00
+     11 00 00 31 SS SS SS SS NN NN NN NN NN NN NN NN XX 00 00
 
 =for example end
 
@@ -169,7 +175,7 @@ magic string:
 
 =for example begin
 
- 14 00 00 36 00 00 00 00 NN NN NN NN NN NN NN NN RR GG BB WW 00 00
+ 14 00 00 36 SS SS SS SS NN NN NN NN NN NN NN NN RR GG BB WW 00 00
 
 =for example end
 
@@ -180,8 +186,6 @@ with the appropriate values.
 Once sent read back 20 bytes to get your result.
 
 =cut
-
-
 
 
 use strict;
