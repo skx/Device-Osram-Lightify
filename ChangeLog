@@ -11,3 +11,8 @@
 	* Setting brightness.
 	* Setting RGBW values.
         * Setting the temperature.
+
+0.3 - 2016/01/01
+  * Repacking update to allow CPAN to index.
+    * Zero code changes.
+
