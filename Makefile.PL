@@ -6,7 +6,7 @@ use ExtUtils::MakeMaker 6.48;
 
 my %WriteMakefileArgs = (
     NAME           => 'Device::Osram::Lightify',
-    VERSION_FROM   => 'lib/Device/Osram/Lightify/Version.pm',
+    VERSION_FROM   => 'lib/Device/Osram/Lightify.pm',
     EXE_FILES      => ["bin/ol" ],
 
     BUILD_REQUIRES => {

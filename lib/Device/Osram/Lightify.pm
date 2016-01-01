@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-Device::Osram::Lightify::Version - The version of our release.
+Device::Osram::Lightify - The version of our release.
 
 =head1 DESCRIPTION
 
@@ -11,9 +11,9 @@ This module just stores the version of our code.
 
 =head1 SYNOPSIS
 
-   use Device::Osram::Lightify::Version;
+   use Device::Osram::Version;
 
-   print $Device::Osram::Lightify::Version::VERSION;
+   print $Device::Osram::Lightify::VERSION;
 
 =cut
 
@@ -32,7 +32,7 @@ the same terms as Perl itself.
 
 =cut
 
-package Device::Osram::Lightify::Version;
+package Device::Osram::Lightify;
 
 use strict;
 use warnings;

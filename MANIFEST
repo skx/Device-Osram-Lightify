@@ -1,4 +1,4 @@
-lib/Device/Osram/Lightify/Version.pm
+lib/Device/Osram/Lightify.pm
 lib/Device/Osram/Lightify/API.pm
 lib/Device/Osram/Lightify/Hub.pm
 lib/Device/Osram/Lightify/Light.pm
