@@ -53,7 +53,7 @@ if ( $CONFIG{ 'on' } )
     {
         if ( $light->name() eq $CONFIG{ 'on' } )
         {
-            $light->on();
+            $light->set_on();
             print("Set $CONFIG{'on'} on.\n");
             exit(0);
         }
@@ -67,7 +67,7 @@ if ( $CONFIG{ 'off' } )
     {
         if ( $light->name() eq $CONFIG{ 'off' } )
         {
-            $light->off();
+            $light->set_off();
             print("Set $CONFIG{'off'} off.\n");
             exit(0);
         }

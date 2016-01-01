@@ -56,7 +56,7 @@ Or turn on only the light with name `hall`:
 
     foreach my $light ( $x->lights() ) {
         if ( $light->name() eq "hall" ) {
-            $light->off();
+            $light->set_on();
             exit(0);
         }
     }

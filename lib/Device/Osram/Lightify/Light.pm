@@ -250,13 +250,13 @@ sub version
 
 
 
-=head2 on
+=head2 set_on
 
 Set this light to be "on".
 
 =cut
 
-sub on
+sub set_on
 {
     my ($self) = (@_);
 
@@ -283,13 +283,13 @@ sub on
 }
 
 
-=head2 on
+=head2 set_off
 
 Set this light to be "off".
 
 =cut
 
-sub off
+sub set_off
 {
     my ($self) = (@_);
 
