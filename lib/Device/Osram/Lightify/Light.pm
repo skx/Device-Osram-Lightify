@@ -316,48 +316,6 @@ sub off
 }
 
 
-=head2 rgb
-
-Set the specified RGB values of this light.
-
-=cut
-
-sub set_rgbw
-{
-    my ( $self, $r, $g, $b, $w ) = (@_);
-
-    my ($self) = (@_);
-
-    my $parent = $self->{ 'hub' };
-    my $socket = $parent->{ '_socket' };
-
-    # Prefix for changing the RGBW values.
-    my $x = "";
-    foreach my $char (qw! 0x14 0x00 0x00 0x36 0x00 0x00 0x00 0x00 !)
-    {
-        $x .= chr( hex($char) );
-    }
-
-    # MAC address - binary - in reverse
-    $x .= $self->{ 'maddr' };
-
-    # The colours.
-    $x .= chr($r);
-    $x .= chr($g);
-    $x .= chr($b);
-    $x .= chr($w);
-
-    # Two more bytes
-    $x .= chr( hex("0x00") );
-    $x .= chr( hex("0x00") );
-
-    syswrite( $socket, $x, length($x) );
-
-    # Read 8-byte header + 12-byte reply
-    my $buffer = $parent->_read(20);
-
-}
-
 =head2 set_brightness
 
 Set the brightness value of this light - valid values are 0-100.
@@ -400,6 +358,97 @@ sub set_brightness
 
     # Read 8-byte header + 12-byte reply
     my $buffer = $parent->_read(20);
+}
+
+
+=head2 rgb
+
+Set the specified RGB values of this light.
+
+=cut
+
+sub set_rgbw
+{
+    my ( $self, $r, $g, $b, $w ) = (@_);
+
+    my $parent = $self->{ 'hub' };
+    my $socket = $parent->{ '_socket' };
+
+    # Prefix for changing the RGBW values.
+    my $x = "";
+    foreach my $char (qw! 0x14 0x00 0x00 0x36 0x00 0x00 0x00 0x00 !)
+    {
+        $x .= chr( hex($char) );
+    }
+
+    # MAC address - binary - in reverse
+    $x .= $self->{ 'maddr' };
+
+    # The colours.
+    $x .= chr($r);
+    $x .= chr($g);
+    $x .= chr($b);
+    $x .= chr($w);
+
+    # Two more bytes
+    $x .= chr( hex("0x00") );
+    $x .= chr( hex("0x00") );
+
+    syswrite( $socket, $x, length($x) );
+
+    # Read 8-byte header + 12-byte reply
+    my $buffer = $parent->_read(20);
+
+}
+
+
+=head2 set_temperature
+
+Set the specified temperature value for this light, in the range 2200-6500.
+
+=cut
+
+sub set_temperature
+{
+    my ( $self, $temp ) = (@_);
+
+    my $parent = $self->{ 'hub' };
+    my $socket = $parent->{ '_socket' };
+
+    if ( $temp < 2200 )
+    {
+        $temp = 2200;
+    }
+    if ( $temp > 6500 )
+    {
+        $temp = 6500;
+    }
+
+    my $t1 = $temp % 256;
+    my $t2 = ( $temp - $t1 ) / 256;
+
+    my $x = "";
+    foreach my $char (qw! 0x12 0x00 0x00 0x33 0x03 0x00 0x00 0x00 !)
+    {
+        $x .= chr( hex($char) );
+    }
+
+    # MAC address - binary - in reverse
+    $x .= $self->{ 'maddr' };
+
+    # The temperature.
+    $x .= chr($t1);
+    $x .= chr($t2);
+
+    # Two more bytes
+    $x .= chr( hex("0x00") );
+    $x .= chr( hex("0x00") );
+
+    syswrite( $socket, $x, length($x) );
+
+    # Read 8-byte header + 12-byte reply
+    my $buffer = $parent->_read(20);
+
 }
 
 
