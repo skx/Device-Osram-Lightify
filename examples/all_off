@@ -1,0 +1,12 @@
+#!/usr/bin/perl
+#
+#  Sample code to turn all devices off.
+#
+
+use strict;
+use warnings;
+
+use Device::Osram::Lightify::Hub;
+
+my $x = Device::Osram::Lightify::Hub->new( host => "192.168.10.136" );
+$x->all_off();

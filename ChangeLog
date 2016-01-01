@@ -1,0 +1,6 @@
+
+0.1 - 2016/01/01
+  * Initial release of the module to CPAN.
+  * Sending "all on" and "all off" events works.
+  * Detecting and displaying details about light-bulbs works.
+
