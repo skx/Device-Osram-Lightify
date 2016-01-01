@@ -14,10 +14,17 @@ need the IP address of your hub available.
 
 =cut
 
-=head1 Discovery
+=head1 Overview
 
-To discover the lights which are available to your hub we connect to
-the hub on port 4000 and send the following binary string to it:
+The communication to/from the hub is carried out via short binary
+communication with the hub over TCP/IP on port 4000.
+
+=cut
+
+=head1 Light Discovery
+
+To discover the lights which are available to your hub we connect and
+send the following binary string to it:
 
 =for example begin
 
@@ -29,8 +36,9 @@ Once sent we then read back a header.  The header contains 11 bytes
 of reply.  From this header we read the 10th byte which will tell us
 the number of bulbs which are available.
 
-Once we know the number of bulbs we then continue to read 50 additional
-bytes which are used to describe the bulb itself.
+Once we know the number of bulbs we can then read 50 bytes for each
+bulb, and this block of data can be parsed to show the current state
+of that specific bulb.
 
 =for example begin
 
@@ -70,14 +78,21 @@ bytes which are used to describe the bulb itself.
 
 =for example end
 
-And that is how you learn the bulbs, and their current statuses!
+B<NOTE> The returned 50 bytes are NULL-terminated/padded.
+
+You'll almost certainly want to make sure you can parse this stuff,
+because users will want to operate upon bulbs by name - and the API
+only allows you to operate on specific devices by MAC-address, so at
+the very least you must be able to lookup `NAME -> MAC`.
 
 =cut
 
 
 =head1 Broadcast
 
-There are two simple commands which will turn all bulbs on, or off.
+There are two simple commands which will turn B<all> lights on, or off,
+these are simple to get started with because you don't need to set the
+MAC address of the bulb inside the command.
 
 To turn all bulbs on send this:
 
@@ -95,9 +110,78 @@ To turn all bulbs off send this:
 
 =for example end
 
-In each case you must read back 20 bytes which will contain the result.
+Once sent read back 20 bytes to get your result.
 
 =cut
+
+
+=head1 Light-Specific Commands
+
+The rest of the commands are going to be bulb-specific, and involve
+sending a command with the MAC address of the destination device inside
+their bodies.
+
+=cut
+
+=head2 On/Off
+
+To set a specific bulb ON or OFF you need to send the following
+magic string:
+
+=for example begin
+
+    0F 00 00 32 00 00 00 00 NN NN NN NN NN NN NN NN ON
+
+=for example end
+
+Here `NN` should be replaced with the MAC address of the device you
+wish to control, backwards, and the last byte C<ON> should be replaced
+by C<0x00> to turn the device off, and C<0x01> to turn it on.
+
+Once set read back 20 bytes to get your result.
+
+=cut
+
+=head2 Brightness
+
+To set a specific brightness for a bulb you need to send the following
+magic string:
+
+=for example begin
+
+     11 00 00 31 00 00 00 00 NN NN NN NN NN NN NN NN XX 00 00
+
+=for example end
+
+Here `NN` should be replaced with the MAC address of the device you
+wish to control, backwards, and the byte C<XX> should be replaced
+with the brighness level you wish to set, in the range 0-100.
+
+Once sent read back 20 bytes to get your result.
+
+=cut
+
+=head2 Colour
+
+To set specific RGBW values for a bulb you need to send the following
+magic string:
+
+=for example begin
+
+ 14 00 00 36 00 00 00 00 NN NN NN NN NN NN NN NN RR GG BB WW 00 00
+
+=for example end
+
+Here `NN` should be replaced with the MAC address of the device you
+wish to control, backwards, and the bytes RR,GG,BB,WW should be updated
+with the appropriate values.
+
+Once sent read back 20 bytes to get your result.
+
+=cut
+
+
+
 
 
 use strict;
