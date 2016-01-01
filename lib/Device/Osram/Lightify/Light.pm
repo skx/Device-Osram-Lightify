@@ -19,8 +19,9 @@ they are discovered dynmically via communication with the hub.
    my $tmp = Device::Osram::Lightify::Hub->new( host => "1.2.3.4" );
 
    # Show all nodes we found
+   # (Stringification means we dump all the state here.)
    foreach my $light ( $tmp->lights() ) {
-      print "Found light " . $light->name() . "\n";
+      print $light;
    }
 
 =cut
@@ -78,6 +79,8 @@ sub new
 
 Internal method, parse the status of a lamp.
 
+=end doc
+
 =cut
 
 sub _decode_binary
@@ -97,7 +100,9 @@ sub _decode_binary
     foreach my $c ( reverse( split( //, $mac ) ) )
     {
         $self->{ 'mac' } .= sprintf( "%02x", ord($c) );
+        $self->{ 'maddr' } .= $c;
     }
+    $self->{ 'maddr' } = reverse( $self->{ 'maddr' } );
 
     # Get the firmware-version
     my $ver = substr( $buffer, 11, 4 );
@@ -163,6 +168,7 @@ sub mac
     return ( $self->{ 'mac' } );
 }
 
+
 =head2 name
 
 Return the name of this light.
@@ -197,7 +203,7 @@ sub rgbw
     $x .= ",";
     $x .= $self->{ 'w' };
 
-    return ( $x );
+    return ($x);
 }
 
 
@@ -254,7 +260,26 @@ sub on
 {
     my ($self) = (@_);
 
-    print "Device::Osram::Lightify::Light::on() -> NOP\n";
+    my $parent = $self->{ 'hub' };
+    my $socket = $parent->{ '_socket' };
+
+    # Prefix for sending a light off
+    my $x = "";
+    foreach my $char (qw! 0x0f 0x00 0x00 0x32 0x00 0x00 0x00 0x00 !)
+    {
+        $x .= chr( hex($char) );
+    }
+
+    # MAC address - binary - in reverse
+    $x .= $self->{ 'maddr' };
+
+    # Desired state: 1
+    $x .= chr( hex("0x01") );
+
+    syswrite( $socket, $x, length($x) );
+
+    # Read 8-byte header + 12-byte reply
+    my $buffer = $parent->_read(20);
 }
 
 
@@ -268,7 +293,26 @@ sub off
 {
     my ($self) = (@_);
 
-    print "Device::Osram::Lightify::Light::off() -> NOP\n";
+    my $parent = $self->{ 'hub' };
+    my $socket = $parent->{ '_socket' };
+
+    # Prefix for sending a light off
+    my $x = "";
+    foreach my $char (qw! 0x0f 0x00 0x00 0x32 0x00 0x00 0x00 0x00 !)
+    {
+        $x .= chr( hex($char) );
+    }
+
+    # MAC address - binary - in reverse
+    $x .= $self->{ 'maddr' };
+
+    # Desired state: 0
+    $x .= chr( hex("0x00") );
+
+    syswrite( $socket, $x, length($x) );
+
+    # Read 8-byte header + 12-byte reply
+    my $buffer = $parent->_read(20);
 }
 
 
@@ -278,11 +322,39 @@ Set the specified RGB values of this light.
 
 =cut
 
-sub set_rgb
+sub set_rgbw
 {
     my ( $self, $r, $g, $b, $w ) = (@_);
 
-    print "Device::Osram::Lightify::Light::set_rgb() -> NOP\n";
+    my ($self) = (@_);
+
+    my $parent = $self->{ 'hub' };
+    my $socket = $parent->{ '_socket' };
+
+    # Prefix for changing the RGBW values.
+    my $x = "";
+    foreach my $char (qw! 0x14 0x00 0x00 0x36 0x00 0x00 0x00 0x00 !)
+    {
+        $x .= chr( hex($char) );
+    }
+
+    # MAC address - binary - in reverse
+    $x .= $self->{ 'maddr' };
+
+    # The colours.
+    $x .= chr($r);
+    $x .= chr($g);
+    $x .= chr($b);
+    $x .= chr($w);
+
+    # Two more bytes
+    $x .= chr( hex("0x00") );
+    $x .= chr( hex("0x00") );
+
+    syswrite( $socket, $x, length($x) );
+
+    # Read 8-byte header + 12-byte reply
+    my $buffer = $parent->_read(20);
 
 }
 
@@ -295,7 +367,39 @@ Set the brightness value of this light - valid values are 0-100.
 sub set_brightness
 {
     my ( $self, $brightness ) = (@_);
-    print "Device::Osram::Lightify::Light::set_brightness() -> NOP\n";
+
+    if ( $brightness < 0 )
+    {
+        $brightness = 0;
+    }
+    if ( $brightness > 100 )
+    {
+        $brightness = 100;
+    }
+
+    my $parent = $self->{ 'hub' };
+    my $socket = $parent->{ '_socket' };
+
+    # Prefix for changing the brightness.
+    my $x = "";
+    foreach my $char (qw! 11 00 00 31 00 00 00 00 !)
+    {
+        $x .= chr( hex($char) );
+    }
+
+    # MAC address - binary - in reverse
+    $x .= $self->{ 'maddr' };
+
+    # Desired brightness 0-100.
+    $x .= chr($brightness);
+
+    $x .= chr( hex("0x00") );
+    $x .= chr( hex("0x00") );
+
+    syswrite( $socket, $x, length($x) );
+
+    # Read 8-byte header + 12-byte reply
+    my $buffer = $parent->_read(20);
 }
 
 
@@ -316,8 +420,8 @@ sub stringify
     $txt .= "\tversion:" . $self->version() . "\n";
     $txt .= "\tBrightness:" . $self->brightness() . "\n";
     $txt .= "\tRGBW:" . $self->rgbw() . "\n";
-    $txt .=  "\tTemperature:" . $self->temperature() . "\n";
-    $txt .=  "\tStatus:" . $self->{'status'} . "\n";
+    $txt .= "\tTemperature:" . $self->temperature() . "\n";
+    $txt .= "\tStatus:" . $self->{ 'status' } . "\n";
 
     $txt;
 }
