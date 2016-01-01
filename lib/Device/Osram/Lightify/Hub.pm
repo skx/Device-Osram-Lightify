@@ -80,7 +80,7 @@ sub all_on
     my ($self) = (@_);
 
     # Get the open socket
-    $self->_connect() unless( $self->{'_socket'} );
+    $self->_connect() unless ( $self->{ '_socket' } );
     my $sock = $self->{ '_socket' };
 
     # Send the magic to initiate "All On"
@@ -109,7 +109,7 @@ sub all_off
     my ($self) = (@_);
 
     # Get the open socket
-    $self->_connect() unless( $self->{'_socket'} );
+    $self->_connect() unless ( $self->{ '_socket' } );
     my $sock = $self->{ '_socket' };
 
     # Send the magic to initiate "All Off"
@@ -143,7 +143,7 @@ sub lights
     my @ret;
 
     # Get the open socket
-    $self->_connect() unless( $self->{'_socket'} );
+    $self->_connect() unless ( $self->{ '_socket' } );
     my $sock = $self->{ '_socket' };
 
     # Send the magic to initiate a scan.
