@@ -238,7 +238,7 @@ sub temperature
 
 =head2 version
 
-Get the firmware version of this lamp.
+Get the firmware version of this light.
 
 =cut
 
