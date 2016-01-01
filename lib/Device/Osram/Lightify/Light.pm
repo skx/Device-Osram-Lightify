@@ -77,7 +77,7 @@ sub new
 
 =begin doc
 
-Internal method, parse the status of a lamp.
+Internal method, parse the status of a light.
 
 =end doc
 
@@ -210,7 +210,7 @@ sub rgbw
 
 =head2 status
 
-Is the lamp C<on> or C<off> ?
+Is the light C<on> or C<off> ?
 
 =cut
 
