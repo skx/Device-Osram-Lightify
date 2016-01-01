@@ -35,6 +35,9 @@ TODO
 
 # Simple Example
 
+These examples all talk to the hub at IP address `192.168.10.136`,
+you'd obviously specify the IP to your own hub there!
+
 Turn all devices off:
 
     #!/usr/bin/perl
@@ -52,8 +55,9 @@ Or turn on only the bulb with name `hall`:
     my $x = Device::Osram::Lightify::Hub->new( host => "192.168.10.136" );
 
     foreach my $light ( $x->lights() ) {
-        if ( $light->name() eq "kitchen" ) {
+        if ( $light->name() eq "hall" ) {
             $light->off();
+            exit(0);
         }
     }
 
