@@ -37,8 +37,8 @@ Once sent we then read back a header.  The header contains 11 bytes
 of reply.  From this header we read the 10th byte which will tell us
 the number of bulbs which are available.
 
-Once we know the number of bulbs we can then read 50 bytes for each
-bulb, and this block of data can be parsed to show the current state
+Once we know the number of lights we can then read 50 bytes for each
+one, and this block of data can be parsed to show the current state
 of that specific bulb.
 
 =for example begin
