@@ -33,7 +33,7 @@ bulbs and their state:
 This is sufficient to make this a useful module.
 
 
-# Simple Example
+# Sample Code
 
 These examples all talk to the hub at IP address `192.168.10.136`,
 you'd obviously specify the IP to your own hub there!
@@ -60,6 +60,31 @@ Or turn on only the light with name `hall`:
             exit(0);
         }
     }
+
+# Sample Application
+
+There is a sample application included with the module, which lets you
+carry out basic operations:
+
+    $ ol --hub 192.168.10.136 --all-on
+    $ ol --hub 192.168.10.136 --all-off
+    $ ol --hub 192.168.10.136 --list
+    Name: kitchen
+        MAC:8418260000d9c70c
+        version:1.2.4.1
+        Brightness:100
+        RGBW:255,255,255,255
+        Temperature:2702
+        Status:off
+    Name: hall
+        MAC:8418260000cb433b
+        version:1.2.4.1
+        Brightness:100
+        RGBW:255,255,255,255
+        Temperature:2702
+        Status:on
+    $ ol --hub 192.168.10.136 --off=hall
+
 
 
 Steve
