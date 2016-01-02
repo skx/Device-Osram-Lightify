@@ -10,6 +10,8 @@
 # --
 
 
+use strict;
+use warnings;
 
 use Device::Osram::Lightify::Hub;
 use Getopt::Long;
