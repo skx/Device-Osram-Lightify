@@ -4,7 +4,7 @@
 #
 # Usage:
 #
-#   fade-in --hub=192.168.10.11 --name=hall --sleep=10
+#   fade_in --hub=192.168.10.11 --name=hall --sleep=10
 #
 # Steve
 # --
