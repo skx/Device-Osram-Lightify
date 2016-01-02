@@ -26,11 +26,28 @@ via connections to the Osram hub.
 
 =head1 DESCRIPTION
 
-This module is work-in-progress and currently allows only global/broadcast
-actions to be carried out, along with the discovery of nodes.
+This module will connect to an Osram Lightify hub, allowing the
+control of lights via Perl.
 
-In the future it will be possible to control the nodes we've discovered
-dynamically.
+The communication with the hub is carried out by sending/receiving
+binary messages to the hub on port 4000.  The specific bytes set
+have been documented in the L<Osram::Lightify::API> module.
+
+This module is responsible for:
+
+=over 8
+
+=item Identifying lights:
+
+We can initiate a discovery of all the available lights, and create
+a suitable L<Osram::Lightify::Light> object for each discovered light.
+
+=item Sending broadcast events:
+
+We can send a broadcast event, which applies to all known lights,
+to instruct them to go on or off.
+
+=back
 
 =cut
 
@@ -71,7 +88,7 @@ sub new
 
 =head2 all_on
 
-Switch all known nodes on.
+Broadcast an "on" event to all lights.
 
 =cut
 
@@ -100,7 +117,7 @@ sub all_on
 
 =head2 all_off
 
-Switch all known nodes off.
+Broadcast an "off" event to all lights.
 
 =cut
 
@@ -191,7 +208,7 @@ sub lights
 
 Private and internal-method.
 
-Connect to the hub, via the host we were given in our constructor.
+Connect to the hub, via the C<host> parameter we were given in our constructor.
 
 =end doc
 
@@ -256,13 +273,13 @@ sub _read
 }
 
 
-=begin doc _connect
+=begin doc _session_token
 
 Private and internal-method.
 
 Generate and return a four-byte token.  All the mutator commands
 for the light-devices take such a thing.  It doesn't seem to matter
-what I set, so I've encoded the seconds-past-the-epoch.
+what we set, so I've encoded the seconds-past-the-epoch.
 
 Setting a value avoids commands being dropped as "old"/"reused".
 

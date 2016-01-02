@@ -5,9 +5,9 @@ Device::Osram::Lightify::Light - The interface to a single light
 
 =head1 DESCRIPTION
 
-This module allows basic operation of an Osram lightify bulb.
+This module allows a single Osram lightify light to be manipulated.
 
-The objects are not expected to be constructed manually, instead
+Objects are not expected to be constructed manually, instead
 they are discovered dynmically via communication with the hub.
 
 =cut
@@ -28,7 +28,7 @@ they are discovered dynmically via communication with the hub.
 
 =head1 DESCRIPTION
 
-This module allows basic control of an Osram Lightify bulb.
+This module allows basic control of an Osram Lightify light.
 
 =cut
 
@@ -264,7 +264,7 @@ sub set_on
     my $parent = $self->{ 'hub' };
     my $socket = $parent->{ '_socket' };
 
-    # Prefix for sending a light off
+    # Prefix for sending a light on
     my $x = "";
     foreach my $char (qw! 0x0f 0x00 0x00 0x32 !)
     {
