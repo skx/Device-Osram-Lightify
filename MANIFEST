@@ -8,8 +8,8 @@ t/00-load.t
 t/10-test-strict.t
 examples/all_on
 examples/all_off
+examples/fade-in
 examples/list
 bin/ol
 LICENSE
 ChangeLog
-
