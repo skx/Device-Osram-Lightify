@@ -14,5 +14,8 @@
 
 0.3 - 2016/01/01
   * Repacking update to allow CPAN to index.
-    * Zero code changes.
+    * Zero code-changes.
 
+0.4 - 2016/01/02
+  * Significant updates to the POD/documentation.
+    * Zero code-changes.
