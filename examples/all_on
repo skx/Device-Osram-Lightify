@@ -19,22 +19,20 @@ use Getopt::Long;
 my %CONFIG;
 
 # Default
-$CONFIG{'hub'} = "192.168.10.136";
+$CONFIG{ 'hub' } = "192.168.10.136";
 
 
 #
 # Parse options
 #
 exit
-  unless (
-           Getopt::Long::GetOptions( "hub=s", \$CONFIG{ 'hub' },
-                                   ));
+  unless ( Getopt::Long::GetOptions( "hub=s", \$CONFIG{ 'hub' }, ) );
 
 
 #
 #  Create the object.
 #
-my $x = Device::Osram::Lightify::Hub->new( host => $CONFIG{'hub'} );
+my $x = Device::Osram::Lightify::Hub->new( host => $CONFIG{ 'hub' } );
 
 #
 #  All on.
