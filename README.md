@@ -1,12 +1,11 @@
 Device::Osram::Lightify
 =======================
 
-This module allows an Osram Lightify system to be controlled by Pure
-Perl.
+This module allows an Osram Lightify system to be controlled by pure Perl.
 
-It is assumed that you will have paired your hub with all your bulbs,
-and otherwise completed the setup of your system, via the mobile
-application, before you use this code.
+It is assumed that you will have paired your hub with all your lights,
+and otherwise completed the setup of your system via the mobile
+application before you use this code.
 
 This code allows you to retrieve all the known-lights, by querying
 your local hub, and apply operations to them.
@@ -14,29 +13,26 @@ your local hub, and apply operations to them.
 
 # Current Status
 
-* Introspection works such that you can dynamically retrieve all known
-bulbs and their state:
-     * On vs. Off
-     * Brightness
-     * Temperature
-     * MAC address
-     * Firmware Version
-     * Name.
+* Introspection works such that you can dynamically retrieve all known lighgs and their state:
+     * On vs. Off.
+     * Brightness.
+     * Temperature.
+     * MAC address.
+     * Firmware Version.
+     * Name..
      * R,G,B,W values.
-* Sending "all on" works.
-* Sending "all off" works.
+* Broadcasting an "all on" event works.
+* Broadcasting an "all off" event works.
 * You can set a specific light on, or off.
-* You can change the brightness of a specific bulb.
-* You can change the R,G,B,W values of a specific bulb.
-* You can change the temperature of a specific bulb.
-
-This is sufficient to make this a useful module.
+* You can change the brightness of a specific light.
+* You can change the R,G,B,W values of a specific light.
+* You can change the temperature of a specific light.
 
 
 # Sample Code
 
-These examples all talk to the hub at IP address `192.168.10.136`,
-you'd obviously specify the IP to your own hub there!
+These examples all talk to the hub which has IP address `192.168.10.136`,
+you would obviously specify the IP to your own hub instead.
 
 Turn all devices off:
 
@@ -60,6 +56,7 @@ Or turn on only the light with name `hall`:
             exit(0);
         }
     }
+
 
 # Sample Application
 
