@@ -2,6 +2,7 @@ lib/Device/Osram/Lightify.pm
 lib/Device/Osram/Lightify/API.pm
 lib/Device/Osram/Lightify/Hub.pm
 lib/Device/Osram/Lightify/Light.pm
+lib/Power/Outlet/Osram.pm
 Makefile.PL
 README.md
 t/00-load.t
