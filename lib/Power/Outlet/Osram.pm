@@ -16,7 +16,7 @@ BEGIN
     }
 }
 
-our $VERSION = '0.16';
+our $VERSION = '0.5';
 
 =head1 NAME
 
