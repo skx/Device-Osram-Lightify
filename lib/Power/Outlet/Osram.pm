@@ -128,12 +128,12 @@ sub _call
         {
             if ( $state =~ /on/i )
             {
-                $device->on();
+                $device->set_on();
                 return 1;
             }
             if ( $state =~ /off/i )
             {
-                $device->off();
+                $device->set_off();
                 return 1;
             }
         }
