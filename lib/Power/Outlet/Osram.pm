@@ -36,7 +36,7 @@ Power::Outlet::Osram is a package for controlling and querying a light on an Osr
 =head1 USAGE
 
   use Power::Outlet::Osram;
-  my $lamp=Power::Outlet::Hue->new(host=>"mybridge", name=>"hall");
+  my $lamp=Power::Outlet::Osram->new(host=>"mybridge", name=>"hall");
   print $lamp->on, "\n";
 
 =head1 CONSTRUCTOR
