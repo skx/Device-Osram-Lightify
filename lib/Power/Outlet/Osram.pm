@@ -24,6 +24,17 @@ Power::Outlet::Osram - Control and query an Osram Lightify light
 
 =head1 SYNOPSIS
 
+Using power-outlet shell script from Power::Outlet distribution
+
+  power-outlet Osram ON host 192.168.1.10 name hall
+
+Using Power::Outlet API
+
+  my $outlet=Power::Outlet->new(type=>"Osram", host => "192.168.1.10", name=>"hall");
+  print $outlet->on, "\n";
+
+Using Power::Outlet::Osram  directly
+
   my $outlet=Power::Outlet::Osram->new(host => "192.168.1.10", name=>"hall");
   print $outlet->query, "\n";
   print $outlet->on, "\n";
@@ -36,7 +47,7 @@ Power::Outlet::Osram is a package for controlling and querying a light on an Osr
 =head1 USAGE
 
   use Power::Outlet::Osram;
-  my $lamp=Power::Outlet::Hue->new(host=>"mybridge", name=>"hall");
+  my $lamp=Power::Outlet::Osram->new(host=>"mybridge", name=>"hall");
   print $lamp->on, "\n";
 
 =head1 CONSTRUCTOR
