@@ -22,3 +22,6 @@
 
 0.5 - 2016/01/09
   * Added module beneath Power::Outlet namespace.
+
+0.6 - 2016/10/01
+  * Minor documentation updates for the Power::Output support.
