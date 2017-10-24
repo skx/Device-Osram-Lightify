@@ -284,6 +284,8 @@ sub set_on
 
     # Read 8-byte header + 12-byte reply
     my $buffer = $parent->_read(20);
+
+    return $self;
 }
 
 
@@ -322,6 +324,7 @@ sub set_off
     # Read 8-byte header + 12-byte reply
     my $buffer = $parent->_read(20);
 
+    return $self;
 }
 
 
@@ -370,6 +373,8 @@ sub set_brightness
 
     # Read 8-byte header + 12-byte reply
     my $buffer = $parent->_read(20);
+
+    return $self;
 }
 
 
@@ -415,6 +420,7 @@ sub set_rgbw
     # Read 8-byte header + 12-byte reply
     my $buffer = $parent->_read(20);
 
+    return $self;
 }
 
 
@@ -468,6 +474,7 @@ sub set_temperature
     # Read 8-byte header + 12-byte reply
     my $buffer = $parent->_read(20);
 
+    return $self;
 }
 
 
