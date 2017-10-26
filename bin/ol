@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 
+use Encode qw!decode encode!;
 use Device::Osram::Lightify::Hub;
 
 use Getopt::Long;
@@ -51,7 +52,7 @@ if ( $CONFIG{ 'on' } )
     # Set a light on
     foreach my $light ( $hub->lights() )
     {
-        if ( $light->name() eq $CONFIG{ 'on' } )
+        if ( $light->name() eq decode 'UTF-8', $CONFIG{ 'on' } )
         {
             $light->set_on();
             print("Set $CONFIG{'on'} on.\n");
@@ -65,7 +66,7 @@ if ( $CONFIG{ 'off' } )
     # Set a single light off
     foreach my $light ( $hub->lights() )
     {
-        if ( $light->name() eq $CONFIG{ 'off' } )
+        if ( $light->name() eq decode 'UTF-8', $CONFIG{ 'off' } )
         {
             $light->set_off();
             print("Set $CONFIG{'off'} off.\n");
@@ -78,7 +79,7 @@ if ( $CONFIG{ 'list' } )
 
     foreach my $light ( $hub->lights() )
     {
-        print $light;
+        print encode 'UTF-8', $light;
     }
 }
 

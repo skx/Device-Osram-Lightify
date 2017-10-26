@@ -41,6 +41,8 @@ use warnings;
 
 package Device::Osram::Lightify::Light;
 
+use Encode 'decode';
+
 #
 #  Allow our object to treated as a string.
 #
@@ -136,7 +138,7 @@ sub _decode_binary
     $self->{ 'w' } = ord( substr( $buffer, 25, 1 ) );
 
     # The name of the bulb.
-    $self->{ 'name' } = substr( $buffer, 26, 15 );
+    $self->{ 'name' } = decode 'UTF-8', substr( $buffer, 26, 15 );
     $self->{ 'name' } =~ s/\0//g;
 }
 
