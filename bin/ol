@@ -48,7 +48,7 @@ Options:
 
   --all-on    Turn on all known-lights.
   --all-off   Turn off all known-lights.
-  --host IP   Specify the address of the hub.
+  --hub IP    Specify the IP address of the hub.
   --list      List all known lights
   --on  name  Turn on the named light.
   --off name  Turn off the named light.
@@ -60,9 +60,9 @@ EOHELP
 #
 # Ensure we have a host
 #
-if ( !$CONFIG{ 'host' } )
+if ( !$CONFIG{ 'hub' } )
 {
-    print "Please specify the IP address of your hub with the '--host' flag\n";
+    print "Please specify the IP address of your hub with the '--hub' flag\n";
     exit 1;
 }
 

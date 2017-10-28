@@ -31,3 +31,6 @@
   * Ensure `--host` is supplied to `ol`.
   * Make setters chainable, implemented by Tekki <http://tekki.ch>
   * Decode light-names from UTF-8, implemented by Tekki <http://tekki.ch>
+
+0.7.1 - 2017/10/28
+  * Fixed bug where I used --host not --hub
