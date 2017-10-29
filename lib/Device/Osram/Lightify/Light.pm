@@ -286,6 +286,9 @@ sub set_on
 
     # Read 8-byte header + 12-byte reply
     my $buffer = $parent->_read(20);
+    die 'Unable to turn light on!' if $parent->_check_response($buffer);
+
+    $self->{ 'status' } = 'on';
 
     return $self;
 }
@@ -325,6 +328,9 @@ sub set_off
 
     # Read 8-byte header + 12-byte reply
     my $buffer = $parent->_read(20);
+    die 'Unable to turn light off!' if $parent->_check_response($buffer);
+
+    $self->{ 'status' } = 'off';
 
     return $self;
 }
@@ -375,6 +381,9 @@ sub set_brightness
 
     # Read 8-byte header + 12-byte reply
     my $buffer = $parent->_read(20);
+    die 'Unable to change brightness!' if $parent->_check_response($buffer);
+
+    $self->{ 'brightness' } = $brightness;
 
     return $self;
 }
@@ -421,6 +430,12 @@ sub set_rgbw
 
     # Read 8-byte header + 12-byte reply
     my $buffer = $parent->_read(20);
+    die 'Unable to change RGBW!' if $parent->_check_response($buffer);
+
+    $self->{ 'r' } = $r;
+    $self->{ 'g' } = $g;
+    $self->{ 'b' } = $b;
+    $self->{ 'w' } = $w;
 
     return $self;
 }
@@ -475,6 +490,9 @@ sub set_temperature
 
     # Read 8-byte header + 12-byte reply
     my $buffer = $parent->_read(20);
+    die 'Unable to change temperature!' if $parent->_check_response($buffer);
+
+    $self->{ 'temperature' } = $temp;
 
     return $self;
 }
