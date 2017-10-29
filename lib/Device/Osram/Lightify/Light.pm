@@ -46,7 +46,7 @@ use Encode 'decode';
 #
 #  Allow our object to treated as a string.
 #
-use overload '""' => 'stringify';
+use overload fallback => 1, '""' => 'stringify';
 
 
 =head2 new
