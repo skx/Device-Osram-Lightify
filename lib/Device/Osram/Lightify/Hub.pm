@@ -112,6 +112,7 @@ sub all_on
 
     # Read 8-byte header + 12-byte reply
     my $buffer = $self->_read(20);
+    die 'Unable to turn all lights on!' if $self->_check_response($buffer);
 }
 
 
@@ -141,7 +142,7 @@ sub all_off
 
     # Read 8-byte header + 12-byte reply
     my $buffer = $self->_read(20);
-
+    die 'Unable to turn all lights off!' if $self->_check_response($buffer);
 }
 
 
@@ -202,6 +203,24 @@ sub lights
     return (@ret);
 }
 
+
+=begin doc _check_response
+
+Internal method used in L<Hub|Osram::Lightify::Hub> and L<Light|Osram::Lightify::Light>.
+
+Checks the response of the hub and returns the error code or 0 for success.
+
+=end doc
+
+=cut
+
+sub _check_response()
+{
+    my ($self, $response) = (@_);
+
+    $response =~ /(.)$/;
+    return unpack('C', $1) * 1;
+}
 
 
 =begin doc _connect
